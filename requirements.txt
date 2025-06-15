@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+random
+itertools
+sys
+io
