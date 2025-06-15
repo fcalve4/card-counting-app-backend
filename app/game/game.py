@@ -9,6 +9,11 @@ class Game():
         self.shoe = Shoe(self.num_decks)
         self.shoe.shuffle()
 
+    def update_count(self, card):
+        if card.rank in ['2', '3', '4', '5', '6']:
+            self.running_count += 1
+        elif card.rank in ['10', 'Jack', 'Queen', 'King', 'Ace']:
+            self.running_count -= 1
         
 
     def game_loop_iteration(self):
@@ -19,21 +24,14 @@ class Game():
             self.shoe.shuffle()
             self.running_count = 0
         else:
-            """                # Await player next card input
-            input("Press Enter to draw the next card (or type 'exit' to quit): ")
-            # if user types exit, break the loop
-            if input().strip().lower() == 'exit':
-                loop_active = False
-                print("Exiting the game.")
-                break"""
             # Draw a card from the shoe
             card = self.shoe.draw_card()
 
             # Update the running count based on the card drawn
-            if card.rank in ['2', '3', '4', '5', '6']:
-                self.running_count += 1
-            elif card.rank in ['10', 'Jack', 'Queen', 'King', 'Ace']:
-                self.running_count -= 1
+            self.update_count(card)
+
             # Print the drawn card and the current running count
-            print(f"Card drawn: {card}, Running Count: {self.running_count}")
-        
+            yield {
+                "card": str(card),
+                "count": self.running_count,
+            }

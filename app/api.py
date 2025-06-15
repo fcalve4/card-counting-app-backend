@@ -1,30 +1,20 @@
 import sys, io
-
+from fastapi.responses import StreamingResponse
+import json
+import time
 from fastapi import APIRouter
 from app.game.game import Game
 router = APIRouter()
 
-@router.get("/")
-def root():
-
-    # Create a Game instance
-    game = Game()
-
-    # Redirect stdout to capture print statements
-    captured_output = io.StringIO()
-    sys.stdout = captured_output
-
-    # Deal a card from the deck and update the running count
-    game.game_loop_iteration()
-
-
-    # Reset redirect
-    sys.stdout = sys.__stdout__
-
-    # Return the captured output for DEBUGGING PURPOSES
-    # THIS WILL NOT WORK AT PRODUCTION SCALE
-    # This will return the output of the game loop to the API response
-    return {"message": "Game loop executed. Check server logs for output.",
-            "output": captured_output.getvalue()}
+@router.get("/stream")
+def stream_game():
     
+    def game_stream():
+        game = Game()
+        for event in game.game_loop_iteration():
+            # Yield each event as a JSON line
+            yield json.dumps(event) + "\n"
+            time.sleep(0.5)  # simulate delay
+
+    return StreamingResponse(game_stream(), media_type="application/json")
 
