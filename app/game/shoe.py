@@ -15,30 +15,32 @@ class Card():
     def __repr__(self):
         return f"{self.rank} of {self.suit}"
     
-class Deck():
+class Shoe():
     """
-    Represents a deck of cards.
+    Represents a shoe of cards.
     """
 
-    def __init__(self):
+    def __init__(self, num_decks):
         """
-        Initialize the deck with a list of cards.
+        Initialize the shoe with a list of cards.
         :param cards: List of card objects.
         """
         self.cards = [Card(suit, rank) for suit in SUITS for rank in RANKS]
-
+        self.cards *= num_decks
 
     def shuffle(self):
         """
-        Shuffle the deck of cards.
+        Shuffle the shoe of cards.
         """
         random.shuffle(self.cards)
 
     def draw_card(self):
         """
-        Draw a card from the top of the deck.
-        :return: The top card or None if the deck is empty.
+        Draw a card from the top of the shoe.
+        :return: The top card or None if the shoe is empty.
         """
         if self.cards:
             return self.cards.pop()
         return None
+    
+

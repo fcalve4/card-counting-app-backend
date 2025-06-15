@@ -7,15 +7,16 @@ router = APIRouter()
 @router.get("/")
 def root():
 
-    # Create a PokerGame instance with the table of players
+    # Create a Game instance
     game = Game()
 
     # Redirect stdout to capture print statements
     captured_output = io.StringIO()
     sys.stdout = captured_output
 
-    # Play a hand of blackjack with the number of players dealt in
-    game.game_loop()
+    # Deal a card from the deck and update the running count
+    game.game_loop_iteration()
+
 
     # Reset redirect
     sys.stdout = sys.__stdout__
@@ -23,9 +24,7 @@ def root():
     # Return the captured output for DEBUGGING PURPOSES
     # THIS WILL NOT WORK AT PRODUCTION SCALE
     # This will return the output of the game loop to the API response
-    return {
-        "message": "Game loop executed.",
-        "output": captured_output.getvalue()
-    }
+    return {"message": "Game loop executed. Check server logs for output.",
+            "output": captured_output.getvalue()}
     
 
