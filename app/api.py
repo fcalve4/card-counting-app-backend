@@ -4,13 +4,17 @@ import json
 import time
 from fastapi import APIRouter
 from app.game.game import Game
+
+
 router = APIRouter()
+
+game = Game()
 
 @router.get("/stream")
 def stream_game():
     
     def game_stream():
-        game = Game()
+        
         for event in game.game_loop_iteration():
             # Yield each event as a JSON line
             yield json.dumps(event) + "\n"
