@@ -29,9 +29,13 @@ class Game():
             # Update the running count based on the card drawn
             self.update_count(card)
 
+            # Calculate the number of decks remaining
+            decks_remaining = round(len(self.shoe.cards) / 52 * 2) / 2
+
             # Print the drawn card and the current running count
             yield {
                 "card": str(card),
                 "count": self.running_count,
-                "cards_remaining": len(self.shoe.cards)
+                "cards_remaining": len(self.shoe.cards),
+                "decks_remaining": decks_remaining
             }
