@@ -19,7 +19,6 @@ class Game():
     def game_loop_iteration(self):
         # Check if the shoe needs to be reshuffled
         if len(self.shoe.cards) == 0:
-            print("Reshuffling the shoe...")
             self.shoe = Shoe(self.num_decks)
             self.shoe.shuffle()
             self.running_count = 0
@@ -34,4 +33,5 @@ class Game():
             yield {
                 "card": str(card),
                 "count": self.running_count,
+                "cards_remaining": len(self.shoe.cards)
             }
