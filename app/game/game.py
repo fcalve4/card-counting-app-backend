@@ -1,9 +1,8 @@
 from app.game.shoe import Shoe
 class Game(): 
-    def __init__(self):
-        # Init running count to zero
+    def __init__(self, num_decks=6):  # 👈 Accept num_decks as a parameter
         self.running_count = 0
-        self.num_decks = 6  # Default number of decks in the shoe
+        self.num_decks = num_decks
 
         # Create a deck and shuffle it initially
         self.shoe = Shoe(self.num_decks)
