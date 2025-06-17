@@ -17,7 +17,7 @@ class Card():
     
 class Shoe():
     """
-    Represents a shoe of cards.
+    Represents a shoe of multiple decks of cards.
     """
 
     def __init__(self, num_decks):
